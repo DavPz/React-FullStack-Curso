@@ -49,11 +49,21 @@ export const InvoiceApp = () => {
                         <form  className="w-50" onSubmit={event => {
                             event.preventDefault();
 
-                            setItems([...items, { key: 4, product: productValue,price: priceValue,quantity: quantityValue }])
+                            setItems([...items, { 
+                                id: 4,
+                                product: productValue,
+                                price: +priceValue,
+                                quantity: parseInt(quantityValue,10)
+                            }])
+
+                            setProductValue('');
+                            setPriceValue('');
+                            setQuantityValue('');
                         }}>
                             <input
                                 type="text"
                                 name="product"
+                                value={productValue}
                                 placeholder="Producto" className="form-control m-3" onChange={
                                     event => {
                                         setProductValue(event.target.value);
@@ -61,6 +71,7 @@ export const InvoiceApp = () => {
                             <input
                                 type="text"
                                 name="price"
+                                value={priceValue}
                                 placeholder="Precio" className="form-control m-3" onChange={
                                     event => {
                                         setPriceValue(event.target.value);
@@ -68,6 +79,7 @@ export const InvoiceApp = () => {
                             <input
                                 type="text"
                                 name="quantity"
+                                value={quantityValue}
                                 placeholder="Cantidad" className="form-control m-3" onChange={
                                     event => {
                                         setQuantityValue(event.target.value);
