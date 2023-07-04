@@ -12,10 +12,12 @@ export const InvoiceApp = () => {
     const { total, id, name, client, company, items: itemsInitial } = getInvoice();
 
     const [productValue, setProductValue] = useState('');
-    const [priceValue, setPriceValue] = useState(0);
-    const [quantityValue, setQuantityValue] = useState(0);
+    const [priceValue, setPriceValue] = useState('');
+    const [quantityValue, setQuantityValue] = useState('');
 
     const [items, setItems] = useState(itemsInitial);
+
+    const [counter, setCounter] = useState(4);
 
     return (
 
@@ -46,19 +48,26 @@ export const InvoiceApp = () => {
                         <ListItemsView title={'Productos de la Factura'} items={items} />
                         <TotalView total={total} />
 
-                        <form  className="w-50" onSubmit={event => {
+                        <form className="w-50" onSubmit={event => {
                             event.preventDefault();
 
-                            setItems([...items, { 
-                                id: 4,
+                            if (productValue.trim().length <= 1) return;
+                            if (priceValue.trim().length <= 1) return;
+                            if (quantityValue.trim().length < 1) return;
+                                                                                 
+
+                            setItems([...items, {
+                                id: counter,
                                 product: productValue,
                                 price: +priceValue,
-                                quantity: parseInt(quantityValue,10)
+                                quantity: parseInt(quantityValue, 10)
                             }])
 
                             setProductValue('');
                             setPriceValue('');
                             setQuantityValue('');
+
+                            setCounter(counter + 1);
                         }}>
                             <input
                                 type="text"
@@ -85,7 +94,11 @@ export const InvoiceApp = () => {
                                         setQuantityValue(event.target.value);
                                     }} />
 
-                            <button type="submit" className="btn btn-primary">Crear Item</button>
+                            <button
+                                type="submit"
+                                className="btn btn-primary m-3">
+                                Nuevo Item
+                            </button>
                         </form>
 
                     </div>
