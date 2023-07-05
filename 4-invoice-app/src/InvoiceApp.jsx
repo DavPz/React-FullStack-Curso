@@ -53,14 +53,22 @@ export const InvoiceApp = () => {
 
                             if (productValue.trim().length <= 1) return;
                             if (priceValue.trim().length <= 1) return;
+                            if (isNaN(priceValue.trim())) {
+                                alert('Error: El precio no es numero');
+                                return
+                            };
                             if (quantityValue.trim().length < 1) return;
-                                                                                 
+                            if (isNaN(quantityValue.trim())) {
+                                alert('Error: La cantidad no es un numero');
+                                return
+                            };
+
 
                             setItems([...items, {
                                 id: counter,
-                                product: productValue,
-                                price: +priceValue,
-                                quantity: parseInt(quantityValue, 10)
+                                product: productValue.trim(),
+                                price: +priceValue.trim(),
+                                quantity: parseInt(quantityValue.trim(), 10)
                             }])
 
                             setProductValue('');
