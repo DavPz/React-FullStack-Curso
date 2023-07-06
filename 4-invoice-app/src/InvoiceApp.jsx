@@ -36,28 +36,41 @@ export const InvoiceApp = () => {
 
     const [items, setItems] = useState([]);
 
-    useEffect( ()=>{
-        const data = getInvoice();
-        setInvoice(data);
-        console.log(data);
-        setItems(data.items);
-    }, [] );
-
-    
-    
-    const { total, id, name, client, company, items: itemsInitial } = invoice;
-
-
     const [formItemsState, setFormItemState] = useState({
         product: '',
         price: '',
         quantity: '',
     });
 
+    const { total, id, name, client, company } = invoice;
+
+    const [counter, setCounter] = useState(4);
+
+    useEffect(() => {
+        const data = getInvoice();
+        setInvoice(data);
+        console.log(data);
+        setItems(data.items);
+    }, []);
+
     const { product, price, quantity } = formItemsState;
 
-    
-    const [counter, setCounter] = useState(4);
+    useEffect(() => {
+        // console.log('el precio cambio');
+    }, [price]);
+
+    useEffect(() => {
+        // console.log('Cambio en el form');
+    }, [formItemsState]);
+
+    useEffect(() => {
+        // console.log('Counter va en '+counter);
+    }, [counter]);
+
+    useEffect(() => {
+         console.log('cambio el item '+counter);
+    }, [items]);
+
 
     const onInpuChange = ({ target: { name, value } }) => {
         {
