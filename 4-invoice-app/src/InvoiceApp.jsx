@@ -11,47 +11,42 @@ export const InvoiceApp = () => {
 
     const { total, id, name, client, company, items: itemsInitial } = getInvoice();
 
-    const [productValue, setProductValue] = useState('');
-    const [priceValue, setPriceValue] = useState('');
-    const [quantityValue, setQuantityValue] = useState('');
+
+    const [formItemsState, setFormItemState] = useState({
+        product: '',
+        price: '',
+        quantity: '',
+    });
+
+    const { product, price, quantity } = formItemsState;
 
     const [items, setItems] = useState(itemsInitial);
 
     const [counter, setCounter] = useState(4);
 
-    const onProductChange = ({ target }) => {
+    const onInpuChange = ({ target: { name, value } }) => {
         {
-            setProductValue(target.value);
+            setFormItemState({
+                ...formItemsState,
+                [name]: value,
+            });
         }
-    }
-
-    const onPriceChange = ({ target }) => {
-        {
-            setPriceValue(target.value);
-        }
-    }
-
-    const onQuantiytChange = ({ target }) => {
-        {
-            setQuantityValue(target.value);
-        }
-
     }
 
     const onVoiceItemsSubmit = (event) => {
         event.preventDefault();
 
-        if (productValue.trim().length <= 1) return;
-        if (priceValue.trim().length <= 1) return;
-        if (isNaN(priceValue.trim())) {
+        if (product.trim().length <= 1) return;
+        if (price.trim().length <= 1) return;
+        if (isNaN(price.trim())) {
             alert('Error: El precio no es numero');
             return
         };
-        if (quantityValue.trim().length < 1) {
+        if (quantity.trim().length < 1) {
             alert('Error: La cantidad debe de ser mayor a 1');
             return
         };
-        if (isNaN(quantityValue.trim())) {
+        if (isNaN(quantity.trim())) {
             alert('Error: La cantidad no es un numero');
             return
         };
@@ -59,14 +54,16 @@ export const InvoiceApp = () => {
 
         setItems([...items, {
             id: counter,
-            product: productValue.trim(),
-            price: +priceValue.trim(),
-            quantity: parseInt(quantityValue.trim(), 10)
+            product: product.trim(),
+            price: +price.trim(),
+            quantity: parseInt(quantity.trim(), 10)
         }])
 
-        setProductValue('');
-        setPriceValue('');
-        setQuantityValue('');
+        setFormItemState({
+            product: '',
+            price: '',
+            quantity: '',
+        });
 
         setCounter(counter + 1);
     }
@@ -104,18 +101,18 @@ export const InvoiceApp = () => {
                             <input
                                 type="text"
                                 name="product"
-                                value={productValue}
-                                placeholder="Producto" className="form-control m-3" onChange={onProductChange} />
+                                value={product}
+                                placeholder="Producto" className="form-control m-3" onChange={onInpuChange} />
                             <input
                                 type="text"
                                 name="price"
-                                value={priceValue}
-                                placeholder="Precio" className="form-control m-3" onChange={event => onPriceChange(event)} />
+                                value={price}
+                                placeholder="Precio" className="form-control m-3" onChange={event => onInpuChange(event)} />
                             <input
                                 type="text"
                                 name="quantity"
-                                value={quantityValue}
-                                placeholder="Cantidad" className="form-control m-3" onChange={onQuantiytChange} />
+                                value={quantity}
+                                placeholder="Cantidad" className="form-control m-3" onChange={onInpuChange} />
 
                             <button
                                 type="submit"
