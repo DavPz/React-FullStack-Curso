@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getInvoice } from "./services/getInvoice"
 import { ClientView } from "./components/ClientView";
 import { CompanyView } from "./components/CompanyView";
@@ -7,9 +7,45 @@ import { ListItemsView } from "./components/ListItemsView";
 import { TotalView } from "./components/TotalView";
 
 
+const invoiceInitial = {
+
+    id: 0,
+    name: '',
+    client: {
+        name: '',
+        lastName: '',
+        address: {
+            country: '',
+            state: '',
+            city: '',
+            street: ' ',
+            number: 0
+        }
+    },
+    company: {
+        name: '',
+        fiscalNumber: 0,
+    },
+    items: [],
+
+};
+
 export const InvoiceApp = () => {
 
-    const { total, id, name, client, company, items: itemsInitial } = getInvoice();
+    const [invoice, setInvoice] = useState(invoiceInitial);
+
+    const [items, setItems] = useState([]);
+
+    useEffect( ()=>{
+        const data = getInvoice();
+        setInvoice(data);
+        console.log(data);
+        setItems(data.items);
+    }, [] );
+
+    
+    
+    const { total, id, name, client, company, items: itemsInitial } = invoice;
 
 
     const [formItemsState, setFormItemState] = useState({
@@ -20,8 +56,7 @@ export const InvoiceApp = () => {
 
     const { product, price, quantity } = formItemsState;
 
-    const [items, setItems] = useState(itemsInitial);
-
+    
     const [counter, setCounter] = useState(4);
 
     const onInpuChange = ({ target: { name, value } }) => {
