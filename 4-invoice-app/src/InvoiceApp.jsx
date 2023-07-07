@@ -68,6 +68,11 @@ export const InvoiceApp = () => {
         setCounter(counter + 1);
     }
 
+    const handlerDeleteItem = (id) => {
+        setItems(items.filter( item => item.id !== id ));
+
+    }
+
     const onActiveForm = () => {
         SetActiveForm(!activeForm);
     }
@@ -98,7 +103,7 @@ export const InvoiceApp = () => {
 
                         </div>
 
-                        <ListItemsView title={'Productos de la Factura'} items={items} />
+                        <ListItemsView title={'Productos de la Factura'} items={items}  handlerDeleteItem={id => handlerDeleteItem(id)}/>
                         <TotalView total={total} />
                         <button className="btn btn-secondary"
                             onClick={onActiveForm}
