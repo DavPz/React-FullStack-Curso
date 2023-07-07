@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getInvoice } from "./services/getInvoice"
+import { getInvoice, getTotal } from "./services/getInvoice"
 import { ClientView } from "./components/ClientView";
 import { CompanyView } from "./components/CompanyView";
 import { InvoiceView } from "./components/InvoiceView";
@@ -32,6 +32,10 @@ const invoiceInitial = {
 
 export const InvoiceApp = () => {
 
+    const [total, setTotal] = useState(0);
+
+    const [counter, setCounter] = useState(4);
+
     const [invoice, setInvoice] = useState(invoiceInitial);
 
     const [items, setItems] = useState([]);
@@ -42,9 +46,9 @@ export const InvoiceApp = () => {
         quantity: '',
     });
 
-    const { total, id, name, client, company } = invoice;
+    const { id, name, client, company } = invoice;
 
-    const [counter, setCounter] = useState(4);
+    const { product, price, quantity } = formItemsState;
 
     useEffect(() => {
         const data = getInvoice();
@@ -52,8 +56,6 @@ export const InvoiceApp = () => {
         console.log(data);
         setItems(data.items);
     }, []);
-
-    const { product, price, quantity } = formItemsState;
 
     useEffect(() => {
         // console.log('el precio cambio');
@@ -68,7 +70,7 @@ export const InvoiceApp = () => {
     }, [counter]);
 
     useEffect(() => {
-         console.log('cambio el item '+counter);
+        setTotal(getTotal(items));
     }, [items]);
 
 
