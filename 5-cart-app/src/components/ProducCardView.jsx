@@ -1,6 +1,5 @@
 export const ProducCardView = ({ id, name, description, price, handler }) => {
     const onAddProduct = (product) => {
-        console.log(product);
         handler(product);
     };
 
