@@ -1,8 +1,9 @@
+import { AddProductCart, DeleteProductCart, UpdateQuantityProductCart } from "./itemsActions";
 
 export const itemsReducer = (state = [], action) => {
 
     switch (action.type) {
-        case 'AddProductCart':
+        case AddProductCart:
 
             return [
                 ...state,
@@ -12,16 +13,19 @@ export const itemsReducer = (state = [], action) => {
                 }
             ];
 
-        case 'UpdateQuantityProductCart':
+        case UpdateQuantityProductCart:
 
             return state.map((i) => {
                 if (i.product.id === action.payload.id) {
-                    i.quantity = i.quantity + 1;
+                    return {
+                        ...i,
+                        quantity: i.quantity + 1,
+                    };
                 }
                 return i;
             });
 
-        case 'DeleteProductCart':
+        case DeleteProductCart:
 
             return [
                 ...state.filter((i) => i.product.id !== action.payload)

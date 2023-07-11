@@ -1,13 +1,19 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { CartView } from "./components/CartView";
 import { CatalogView } from "./components/CatalogView";
 import { itemsReducer } from "./reducer/itemsReducer";
+import { AddProductCart, DeleteProductCart, UpdateQuantityProductCart } from "./reducer/itemsActions";
 
 const initialCartItems = JSON.parse(sessionStorage.getItem('cart')) || [];
 
 export const CartApp = () => {
 
     const [cartItems, dispatch] = useReducer(itemsReducer, initialCartItems);
+    
+    useEffect(() => {
+        sessionStorage.setItem('cart', JSON.stringify(cartItems));
+    }, [cartItems]
+    );
 
     const handlerAddProductCart = (product) => {
 
@@ -16,7 +22,7 @@ export const CartApp = () => {
 
             dispatch(
                 {
-                    type: 'UpdateQuantityProductCart',
+                    type: UpdateQuantityProductCart,
                     payload: product,
                 }
             );
@@ -25,7 +31,7 @@ export const CartApp = () => {
 
             dispatch(
                 {
-                    type: 'AddProductCart',
+                    type: AddProductCart,
                     payload: product,
 
                 }
@@ -36,7 +42,7 @@ export const CartApp = () => {
     const handlerDeleteProductCart = (id) => {
         dispatch(
             {
-                type: 'DeleteProductCart',
+                type: DeleteProductCart,
                 payload: id,   
             }
         )
