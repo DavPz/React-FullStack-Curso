@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartView } from "./components/CartView";
 import { CatalogView } from "./components/CatalogView";
 
@@ -54,7 +54,7 @@ export const CartApp = () => {
 
     return (
         <>
-            <div className="container">
+            <div className="container my-4">
 
                 <h3>Cart App</h3>
 
