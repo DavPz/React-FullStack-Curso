@@ -43,7 +43,7 @@ export const CartView = ({ items, handlerDelete }) => {
                 <tfoot>
                     <tr>
                         <td colSpan="3" className="text-end fw-bold">Total</td>
-                        <td colSpan="2" className="text-start fw-bold">{total}</td>
+                        <td colSpan="2" className="text-start fw-bold">$ {total}</td>
                     </tr>
                 </tfoot>
             </table>

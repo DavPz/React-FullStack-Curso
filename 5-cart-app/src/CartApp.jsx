@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CartView } from "./components/CartView";
 import { CatalogView } from "./components/CatalogView";
 
-const initialCartItems = JSON.parse(sessionStorage.getItem('cart') || []);
+const initialCartItems = JSON.parse(sessionStorage.getItem('cart')) || [];
 
 export const CartApp = () => {
 
@@ -56,8 +56,7 @@ export const CartApp = () => {
                         <CartView items={cartItems} handlerDelete={handlerDeleteProductCart} />
                     </div>
                 )}
-
-
+                
             </div>
 
 
