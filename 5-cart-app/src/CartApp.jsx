@@ -32,7 +32,7 @@ export const CartApp = () => {
                 }
                 return i;
             })
-            )
+            );
 
         } else {
             setCartItems([...cartItems,
@@ -46,6 +46,12 @@ export const CartApp = () => {
 
     };
 
+    const handlerDeleteProductCart = (id) => {
+        setCartItems([
+            ...cartItems.filter((i) => i.product.id !== id)
+        ])
+    };
+
     return (
         <>
             <div className="container">
@@ -53,10 +59,12 @@ export const CartApp = () => {
                 <h3>Cart App</h3>
 
                 <CatalogView handler={handlerAddProductCart} />
+                {cartItems?.length <= 0 || (
+                    <div className="my-4 w-50">
+                        <CartView items={cartItems} handlerDelete={handlerDeleteProductCart} />
+                    </div>
+                )}
 
-                <div className="my-4 w-50">
-                    <CartView items={cartItems} />
-                </div>
 
             </div>
 
