@@ -4,7 +4,7 @@ import { CarRoutes } from "./routes/CarRoutes";
 
 export const CartApp = () => {
 
-    const { cartItems, handlerAddProductCart, handlerDeleteProductCart } = useItemsCart();
+    const { cartItems, handlerAddProductCart, handlerDeleteProductCart, handlerUpdateQuantityManually } = useItemsCart();
 
     return (
         <>
@@ -16,6 +16,7 @@ export const CartApp = () => {
                     cartItems={cartItems}
                     handlerAddProductCart={handlerAddProductCart}
                     handlerDeleteProductCart={handlerDeleteProductCart}
+                    handlerUpdateQuantityManually={handlerUpdateQuantityManually}
                 />
             </div>
 

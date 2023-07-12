@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import { CatalogView } from "../components/CatalogView"
 import { CartView } from "../components/CartView"
 
-export const CarRoutes = ({ handlerAddProductCart, handlerDeleteProductCart, cartItems }) => {
+export const CarRoutes = ({ handlerAddProductCart, handlerDeleteProductCart, cartItems, handlerUpdateQuantityManually }) => {
     return (
         <>
 
@@ -19,7 +19,10 @@ export const CarRoutes = ({ handlerAddProductCart, handlerDeleteProductCart, car
                             :
                             (
                                 <div className="my-4 w-50">
-                                    <CartView items={cartItems} handlerDelete={handlerDeleteProductCart} />
+                                    <CartView
+                                        items={cartItems}
+                                        handlerDelete={handlerDeleteProductCart}
+                                        handlerUpdateQuantityManually={handlerUpdateQuantityManually} />
                                 </div>
                             )
                     )} />

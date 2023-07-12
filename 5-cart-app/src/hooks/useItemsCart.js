@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { AddProductCart, DeleteProductCart, UpdateQuantityProductCart } from "../reducer/itemsActions";
+import { AddProductCart, DeleteProductCart, UpdateQuantityManually, UpdateQuantityProductCart } from "../reducer/itemsActions";
 import { itemsReducer } from "../reducer/itemsReducer";
 
 const initialCartItems = JSON.parse(sessionStorage.getItem('cart')) || [];
@@ -46,9 +46,23 @@ export const useItemsCart = () => {
         )
     };
 
+    const handlerUpdateQuantityManually = (id, valor) => {
+        dispatch(
+            {
+                type: UpdateQuantityManually,
+                payload: {
+                    id,
+                    valor
+                }
+            }
+        )
+    }
+
+
     return {
         cartItems,
         handlerAddProductCart,
         handlerDeleteProductCart,
+        handlerUpdateQuantityManually,
     }
 }

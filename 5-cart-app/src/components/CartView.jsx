@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { getTotal } from "../services/productService";
 import { useNavigate } from "react-router-dom";
+import { ItemQuantityCounter } from "./ItemQuantityCounter";
 
-export const CartView = ({ items, handlerDelete }) => {
+export const CartView = ({ items, handlerDelete, handlerUpdateQuantityManually }) => {
 
     const [total, setTotal] = useState(0);
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ export const CartView = ({ items, handlerDelete }) => {
                         <tr key={item.product.id}>
                             <td>{item.product.name}</td>
                             <td>{item.product.price}</td>
-                            <td>{item.quantity}</td>
+                            <ItemQuantityCounter item={item} handlerUpdateQuantityManually={handlerUpdateQuantityManually} />
                             <td>{item.quantity * item.product.price}</td>
                             <td><button className="btn btn-danger" onClick={() => onDeleteProduct(item.product.id)}>Eliminar</button></td>
                         </tr>
