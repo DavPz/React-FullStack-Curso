@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const UserForm = () => {
+export const UserForm = ({handleAddUser}) => {
 
     const inicitalUserForm = {
         userName: '',
@@ -27,8 +27,10 @@ const onSubmit = (event) => {
         return;        
     }
 
-    setUserForm(inicitalUserForm);
+    handleAddUser(userForm);
 
+    setUserForm(inicitalUserForm);
+    
 }
 
     return (
