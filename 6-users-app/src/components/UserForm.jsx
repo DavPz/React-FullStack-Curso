@@ -21,6 +21,12 @@ export const UserForm = () => {
 
 const onSubmit = (event) => {
     event.preventDefault();
+
+    if (!userName || !password || !email) {
+        alert('Error: Campos Vacios')
+        return;        
+    }
+
     setUserForm(inicitalUserForm);
 
 }
