@@ -1,5 +1,7 @@
+import { useReducer } from "react";
 import { UserForm } from "./components/UserForm"
 import { UserList } from "./components/UserList"
+import { usersReducer } from "./reducers/usersReducer";
 
 const inictialUsers = [
     {
@@ -12,8 +14,13 @@ const inictialUsers = [
 
 export const UsersApp = () => {
 
+    const [users, dispatch] = useReducer(usersReducer, inictialUsers);
+
     const handleAddUser = (user) => {
-        console.log(user);
+        dispatch({
+            type: 'addUser',
+            payload: user,
+        })
     }
 
     return (
@@ -21,12 +28,12 @@ export const UsersApp = () => {
             <h2>Users App</h2>
             <div className="row">
                 <div className="col">
-                    <UserForm 
-                    handleAddUser={handleAddUser} />
+                    <UserForm
+                        handleAddUser={handleAddUser} />
                 </div>
                 <div className="col">
                     <UserList
-                        users={inictialUsers} />
+                        users={users} />
                 </div>
             </div>
         </div>
