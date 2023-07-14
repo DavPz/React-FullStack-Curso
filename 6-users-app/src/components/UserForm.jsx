@@ -1,12 +1,7 @@
 import { useState } from "react";
 
-export const UserForm = ({handleAddUser}) => {
+export const UserForm = ({handleAddUser, inicitalUserForm}) => {
 
-    const inicitalUserForm = {
-        userName: '',
-        password: '',
-        email: '',
-    };
     const [userForm, setUserForm] = useState(inicitalUserForm);
 
     const { userName, password, email } = userForm;
