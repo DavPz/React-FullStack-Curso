@@ -23,6 +23,13 @@ export const UsersApp = () => {
         })
     }
 
+    const handleRemoveUser = (id) => {
+        dispatch({
+            type: 'removeUser',
+            payload: id,
+        })
+    }
+
     return (
         <div className="container my-4">
             <h2>Users App</h2>
@@ -33,7 +40,8 @@ export const UsersApp = () => {
                 </div>
                 <div className="col">
                     <UserList
-                        users={users} />
+                        users={users}
+                        handleRemoveUser={handleRemoveUser} />
                 </div>
             </div>
         </div>
