@@ -18,8 +18,15 @@ export const UserForm = () => {
             [name]: value,
         })
     }
+
+const onSubmit = (event) => {
+    event.preventDefault();
+    setUserForm(inicitalUserForm);
+
+}
+
     return (
-        <form>
+        <form onSubmit={onSubmit}>
             <input
                 className="form-control my-3 w-75"
                 placeholder="UserName"
@@ -31,7 +38,7 @@ export const UserForm = () => {
                 type="password"
                 className="form-control my-3 w-75"
                 placeholder="Password"
-                name="Password"
+                name="password"
                 value={password}
                 onChange={onInputChange}
             />
