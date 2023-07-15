@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const UserForm = ({handleAddUser, inicitalUserForm}) => {
+export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected }) => {
 
     const [userForm, setUserForm] = useState(inicitalUserForm);
 
     const { userName, password, email } = userForm;
+
+    useEffect(() => {
+        setUserForm({
+            ...userSelected,
+            // password: '',
+        });
+
+    }, [userSelected])
 
     const onInputChange = ({ target }) => {
         const { name, value } = target;
@@ -14,19 +22,19 @@ export const UserForm = ({handleAddUser, inicitalUserForm}) => {
         })
     }
 
-const onSubmit = (event) => {
-    event.preventDefault();
+    const onSubmit = (event) => {
+        event.preventDefault();
 
-    if (!userName || !password || !email) {
-        alert('Error: Campos Vacios')
-        return;        
+        if (!userName || !password || !email) {
+            alert('Error: Campos Vacios')
+            return;
+        }
+
+        handleAddUser(userForm);
+
+        setUserForm(inicitalUserForm);
+
     }
-
-    handleAddUser(userForm);
-
-    setUserForm(inicitalUserForm);
-    
-}
 
     return (
         <form onSubmit={onSubmit}>
