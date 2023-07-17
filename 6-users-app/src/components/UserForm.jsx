@@ -4,12 +4,12 @@ export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected }) => {
 
     const [userForm, setUserForm] = useState(inicitalUserForm);
 
-    const { userName, password, email } = userForm;
+    const { id, userName, password, email } = userForm;
 
     useEffect(() => {
         setUserForm({
             ...userSelected,
-            // password: '',
+            password: '',
         });
 
     }, [userSelected])
@@ -25,7 +25,7 @@ export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected }) => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        if (!userName || !password || !email) {
+        if (!userName || (!password && id === 0) || !email) {
             alert('Error: Campos Vacios')
             return;
         }
@@ -45,14 +45,15 @@ export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected }) => {
                 value={userName}
                 onChange={onInputChange}
             />
-            <input
+            {id > 0 || <input
                 type="password"
                 className="form-control my-3 w-75"
                 placeholder="Password"
                 name="password"
                 value={password}
                 onChange={onInputChange}
-            />
+            />}
+
             <input
                 className="form-control my-3 w-75"
                 placeholder="Email"
@@ -60,11 +61,16 @@ export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected }) => {
                 value={email}
                 onChange={onInputChange}
             />
+            <input
+                type="hidden"
+                name="id"
+                value={id}
+            />
             <button
                 className="btn btn-primary"
                 type="submit"
             >
-                Crear
+                {id > 0 ? 'Editar' : 'Crear'}
             </button>
         </form>
     )
