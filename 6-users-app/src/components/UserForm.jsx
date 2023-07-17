@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected }) => {
 
@@ -26,7 +27,12 @@ export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected }) => {
         event.preventDefault();
 
         if (!userName || (!password && id === 0) || !email) {
-            alert('Error: Campos Vacios')
+
+            Swal.fire(
+                'Error de Validacion',
+                'Error: Campos Vacios',
+                'error'
+            );
             return;
         }
 
