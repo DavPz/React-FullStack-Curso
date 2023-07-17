@@ -22,19 +22,12 @@ export const useUsers = () => {
 
     const [users, dispatch] = useReducer(usersReducer, inictialUsers);
     const [userSelected, setUserSelected] = useState(inicitalUserForm);
+    const [visibleForm, setVisibleForm] = useState(false);
 
     const handleAddUser = (user) => {
 
-        let type;
-
-        if (user.id === 0) {
-            type = 'addUser';
-        } else {
-            type = 'updateUser';
-        }
-
         dispatch({
-            type,
+            type: (user.id === 0) ? 'addUser' : 'updateUser',
             payload: user,
         });
 
@@ -42,7 +35,9 @@ export const useUsers = () => {
             (user.id === 0) ? 'Usuario Creado' : 'Usuario Actualizado',
             (user.id === 0) ? 'El Usuario ha sido creado con exito!!' : 'El usuario ha sido Actualizado Correctamente',
             'success'
-        )
+        );
+
+        handlerCloseForm();
 
     }
 
@@ -77,16 +72,29 @@ export const useUsers = () => {
 
     const handlerUserSelectedForm = (user) => {
         // console.log(user);
+        setVisibleForm(true);
         setUserSelected({ ...user });
+    }
+
+    const handlerOpenForm = () =>{
+        setVisibleForm(true);
+    }
+
+    const handlerCloseForm = () =>{
+        setVisibleForm(false);
+        setUserSelected(inicitalUserForm);
     }
 
     return {
         users,
         userSelected,
         inicitalUserForm,
+        visibleForm,
         handleAddUser,
         handleRemoveUser,
-        handlerUserSelectedForm
+        handlerUserSelectedForm,
+        handlerOpenForm,
+        handlerCloseForm,
     }
 
 
