@@ -4,8 +4,8 @@ import { UsersPages } from "./pages/UsersPages";
 import { loginReducer } from "./auth/reducers/loginReducer";
 import Swal from "sweetalert2";
 
-const initialLogin = {
-    isAuth: false,
+const initialLogin = JSON.parse(sessionStorage.getItem('login')) || {
+        isAuth: false,
     user: undefined,
 }
 export const UsersApp = () => {
@@ -19,7 +19,12 @@ export const UsersApp = () => {
             dispatch({
                 type: 'login',
                 payload: user,
-            })
+            });
+            sessionStorage.setItem('login',JSON.stringify({
+                isAuth: true,
+                user,
+            }));
+
         } else {
             Swal.fire('Error de Login', 'Username y/o Password incorrectos', 'error');
         }
