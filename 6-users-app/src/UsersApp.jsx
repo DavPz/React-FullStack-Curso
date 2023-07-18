@@ -1,3 +1,4 @@
+import { LoginPage } from "./auth/pages/LoginPage";
 import { UserList } from "./components/UserList"
 import { UserModalForm } from "./components/UserModalForm";
 import { useUsers } from "./hooks/useUsers";
@@ -22,12 +23,12 @@ export const UsersApp = () => {
     return (
         <>
             {!visibleForm ||
-            <UserModalForm 
-                userSelected={userSelected}
-                inicitalUserForm={inicitalUserForm}
-                handleAddUser={handleAddUser}
-                handlerCloseForm={handlerCloseForm}
-            />
+                <UserModalForm
+                    userSelected={userSelected}
+                    inicitalUserForm={inicitalUserForm}
+                    handleAddUser={handleAddUser}
+                    handlerCloseForm={handlerCloseForm}
+                />
 
             }
             <div className="container my-4">
