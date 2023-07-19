@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { loginReducer } from "../reducers/loginReducer";
 import Swal from "sweetalert2";
+import { loginUser } from "../services/authService";
 
 const initialLogin = JSON.parse(sessionStorage.getItem('login')) || {
     isAuth: false,
@@ -12,8 +13,8 @@ export const useAuth = () => {
     const [login, dispatch] = useReducer(loginReducer, initialLogin);
 
     const handlerLogin = ({ userName, password }) => {
-
-        if (userName === 'admin' && password === '12345') {
+        const isLogin = loginUser({ userName, password });
+        if (isLogin) {
             const user = { userName: 'admin' };
             dispatch({
                 type: 'login',
