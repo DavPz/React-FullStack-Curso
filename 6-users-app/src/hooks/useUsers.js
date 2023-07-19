@@ -1,6 +1,7 @@
 import { useReducer, useState } from "react";
 import Swal from "sweetalert2";
 import { usersReducer } from "../reducers/usersReducer";
+import { useNavigate } from "react-router-dom";
 
 const inictialUsers = [
     {
@@ -23,6 +24,7 @@ export const useUsers = () => {
     const [users, dispatch] = useReducer(usersReducer, inictialUsers);
     const [userSelected, setUserSelected] = useState(inicitalUserForm);
     const [visibleForm, setVisibleForm] = useState(false);
+    const navigate = useNavigate();
 
     const handleAddUser = (user) => {
 
@@ -38,6 +40,7 @@ export const useUsers = () => {
         );
 
         handlerCloseForm();
+        navigate("/users");
 
     }
 
