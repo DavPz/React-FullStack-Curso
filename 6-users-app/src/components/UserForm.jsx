@@ -36,6 +36,16 @@ export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected, handle
             return;
         }
 
+        if (!email.includes('@')) {
+            Swal.fire(
+                'Error de Validacion Email',
+                'Error: El email debe de ser valido',
+                'error'
+            );
+            return;
+                        
+        }
+
         handleAddUser(userForm);
 
         setUserForm(inicitalUserForm);

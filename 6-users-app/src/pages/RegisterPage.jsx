@@ -9,13 +9,16 @@ export const RegisterPage = ({ users = [], handleAddUser, inicitalUserForm }) =>
     const { id } = useParams();
 
     useEffect(() => {
-        const user = users.find(u => u.id == id) || inicitalUserForm;
-        setUserSelected(user);
+        if (id) {
+            const user = users.find(u => u.id == id) || inicitalUserForm;
+            setUserSelected(user);
+        }
+
     }, [id])
 
     return (
         <div className="container my-4">
-            <h4>{ userSelected.id > 0 ? 'Editar' : 'Registro' } Usuario</h4>
+            <h4>{userSelected.id > 0 ? 'Editar' : 'Registro'} Usuario</h4>
             <div className="row">
                 <div className="col">
                     <UserForm
