@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { UserContext } from "../context/UserContext";
 
-export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected, handlerCloseForm }) => {
+export const UserForm = ({ userSelected, handlerCloseForm }) => {
+
+    const { handleAddUser, inicitalUserForm } = useContext(UserContext);
 
     const [userForm, setUserForm] = useState(inicitalUserForm);
 
@@ -43,7 +46,7 @@ export const UserForm = ({ handleAddUser, inicitalUserForm, userSelected, handle
                 'error'
             );
             return;
-                        
+
         }
 
         handleAddUser(userForm);
