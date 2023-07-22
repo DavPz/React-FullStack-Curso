@@ -1,7 +1,10 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Swal from "sweetalert2";
+import { AuthContext } from "../context/AuthContext";
 
-export const LoginPage = ({ handlerLogin }) => {
+export const LoginPage = () => {
+
+    const { handlerLogin } = useContext(AuthContext);
 
     const initialLoginForm = {
         userName: '',
