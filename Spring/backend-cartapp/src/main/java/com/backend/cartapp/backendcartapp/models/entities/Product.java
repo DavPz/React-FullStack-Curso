@@ -16,7 +16,7 @@ public class Product {
 
     private String name;
 
-    private String desctiption;
+    private String description;
 
     private Long price;
 
@@ -36,12 +36,12 @@ public class Product {
         this.name = name;
     }
 
-    public String getDesctiption() {
-        return desctiption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesctiption(String desctiption) {
-        this.desctiption = desctiption;
+    public void setDescription(String desctiption) {
+        this.description = desctiption;
     }
 
     public Long getPrice() {
