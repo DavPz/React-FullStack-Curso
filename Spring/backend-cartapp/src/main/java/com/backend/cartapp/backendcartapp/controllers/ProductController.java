@@ -1,6 +1,7 @@
 package com.backend.cartapp.backendcartapp.controllers;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,12 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<Product> list() {
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return productService.findAll();
     }
 
