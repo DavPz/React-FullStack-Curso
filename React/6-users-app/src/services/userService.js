@@ -14,11 +14,11 @@ export const finAll = async () => {
     return null;
 }
 
-export const save = async ({ username, email, password }) => {
+export const save = async ({ userName, email, password }) => {
 
     try {
         return await axios.post(BASE_URL, {
-            username,
+            userName,
             email,
             password,
         });
@@ -28,10 +28,10 @@ export const save = async ({ username, email, password }) => {
     return undefined;
 }
 
-export const updateUser = async ({ id, username, email }) => {
+export const updateUser = async ({ id, userName, email }) => {
     try {
         return await axios.put(`${BASE_URL}/${id}`, {
-            username,
+            userName,
             email,
         });
     } catch (error) {
