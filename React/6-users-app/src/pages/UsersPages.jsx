@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserList } from "../components/UserList"
 import { UserModalForm } from "../components/UserModalForm";
 import { UserContext } from "../context/UserContext";
@@ -9,7 +9,12 @@ export const UsersPages = () => {
         users,
         visibleForm,
         handlerOpenForm,
+        getUsers,
     } = useContext(UserContext);
+
+    useEffect(() => {
+        getUsers();
+    },[])
 
     return (
         <>

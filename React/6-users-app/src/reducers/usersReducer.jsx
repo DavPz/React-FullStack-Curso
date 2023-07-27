@@ -27,6 +27,9 @@ export const usersReducer = (state = [], action) => {
                 return u;
             })
 
+        case 'loadingUsers':
+            return action.payload;
+
         default:
             return state;
     }
