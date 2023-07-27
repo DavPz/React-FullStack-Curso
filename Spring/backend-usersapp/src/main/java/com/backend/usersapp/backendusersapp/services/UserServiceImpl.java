@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
+    @Transactional
     public Optional<User> update(User user, Long id) {
         Optional<User> o = this.findById(id);
         User userOptional = null;
