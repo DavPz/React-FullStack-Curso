@@ -23,9 +23,8 @@ export const save = async ({ userName, email, password }) => {
             password,
         });
     } catch (error) {
-        console.error(error);
+        throw error;
     }
-    return undefined;
 }
 
 export const updateUser = async ({ id, userName, email }) => {
@@ -35,9 +34,9 @@ export const updateUser = async ({ id, userName, email }) => {
             email,
         });
     } catch (error) {
-        console.error(error);
+        throw error;
     }
-    return undefined;
+
 }
 
 export const deleteUser = async (id) => {

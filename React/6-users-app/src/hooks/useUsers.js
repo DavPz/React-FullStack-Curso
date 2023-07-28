@@ -13,11 +13,19 @@ const inicitalUserForm = {
     email: '',
 };
 
+const inicitalErrors = {
+    userName: '',
+    password: '',
+    email: '',
+};
+
 export const useUsers = () => {
 
     const [users, dispatch] = useReducer(usersReducer, inictialUsers);
     const [userSelected, setUserSelected] = useState(inicitalUserForm);
     const [visibleForm, setVisibleForm] = useState(false);
+
+    const [errors, setErrors] = useState(inicitalErrors);
     const navigate = useNavigate();
 
     const getUsers = async () => {
@@ -31,25 +39,36 @@ export const useUsers = () => {
     const handleAddUser = async (user) => {
 
         let response;
-        if (user.id === 0) {
-            response = await save(user);
-        } else {
-            response = await updateUser(user);
+
+        try {
+
+            if (user.id === 0) {
+                response = await save(user);
+            } else {
+                response = await updateUser(user);
+            }
+
+            dispatch({
+                type: (user.id === 0) ? 'addUser' : 'updateUser',
+                payload: response.data,
+            });
+
+            Swal.fire(
+                (user.id === 0) ? 'Usuario Creado' : 'Usuario Actualizado',
+                (user.id === 0) ? 'El Usuario ha sido creado con exito!!' : 'El usuario ha sido Actualizado Correctamente',
+                'success'
+            );
+
+            handlerCloseForm();
+            navigate("/users");
+
+        } catch (error) {
+            if(error.response && error.response.status == 400){
+                setErrors(error.response.data);
+            } else{
+                throw error;
+            }
         }
-
-        dispatch({
-            type: (user.id === 0) ? 'addUser' : 'updateUser',
-            payload: response.data,
-        });
-
-        Swal.fire(
-            (user.id === 0) ? 'Usuario Creado' : 'Usuario Actualizado',
-            (user.id === 0) ? 'El Usuario ha sido creado con exito!!' : 'El usuario ha sido Actualizado Correctamente',
-            'success'
-        );
-
-        handlerCloseForm();
-        navigate("/users");
 
     }
 
@@ -99,11 +118,12 @@ export const useUsers = () => {
         setUserSelected(inicitalUserForm);
     }
 
-    return {
+    return {        
         users,
         userSelected,
         inicitalUserForm,
         visibleForm,
+        errors,
         handleAddUser,
         handleRemoveUser,
         handlerUserSelectedForm,
