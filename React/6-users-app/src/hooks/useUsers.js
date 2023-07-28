@@ -63,9 +63,20 @@ export const useUsers = () => {
             navigate("/users");
 
         } catch (error) {
-            if(error.response && error.response.status == 400){
+            if (error.response && error.response.status == 400) {
                 setErrors(error.response.data);
-            } else{
+
+                // Swal.fire(
+                //     'Error de Validacion',
+                //     `Errores:  ${error.response.data.userName} \\n
+                //     ${error.response.data.password} \\n
+                //     ${error.response.data.email} \\n`,
+
+                //     'error'
+                // );
+
+
+            } else {
                 throw error;
             }
         }
@@ -116,9 +127,10 @@ export const useUsers = () => {
     const handlerCloseForm = () => {
         setVisibleForm(false);
         setUserSelected(inicitalUserForm);
+        setErrors({});
     }
 
-    return {        
+    return {
         users,
         userSelected,
         inicitalUserForm,

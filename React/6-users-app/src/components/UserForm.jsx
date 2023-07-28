@@ -50,9 +50,7 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
         }
 
         handleAddUser(userForm);
-
-        setUserForm(inicitalUserForm);
-
+        
     }
 
     const onCloseForm = () => {
@@ -69,6 +67,7 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
                 value={userName}
                 onChange={onInputChange}
             />
+            <p className="text-danger">{errors?.userName}</p>
             {id > 0 || <input
                 type="password"
                 className="form-control my-3 w-75"
@@ -77,6 +76,7 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
                 value={password}
                 onChange={onInputChange}
             />}
+            <p className="text-danger">{errors?.password}</p>
 
             <input
                 className="form-control my-3 w-75"
@@ -85,6 +85,7 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
                 value={email}
                 onChange={onInputChange}
             />
+            <p className="text-danger">{errors?.email}</p>
             <input
                 type="hidden"
                 name="id"
