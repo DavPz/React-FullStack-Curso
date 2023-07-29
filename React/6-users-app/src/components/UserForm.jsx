@@ -29,25 +29,25 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        if (!userName || (!password && id === 0) || !email) {
+        // if (!userName || (!password && id === 0) || !email) {
 
-            Swal.fire(
-                'Error de Validacion',
-                'Error: Campos Vacios',
-                'error'
-            );
-            return;
-        }
+        //     Swal.fire(
+        //         'Error de Validacion',
+        //         'Error: Campos Vacios',
+        //         'error'
+        //     );
+        //     return;
+        // }
 
-        if (!email.includes('@')) {
-            Swal.fire(
-                'Error de Validacion Email',
-                'Error: El email debe de ser valido',
-                'error'
-            );
-            return;
+        // if (!email.includes('@')) {
+        //     Swal.fire(
+        //         'Error de Validacion Email',
+        //         'Error: El email debe de ser valido',
+        //         'error'
+        //     );
+        //     return;
 
-        }
+        // }
 
         handleAddUser(userForm);
         
