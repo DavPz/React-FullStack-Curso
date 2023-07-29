@@ -66,15 +66,18 @@ export const useUsers = () => {
             if (error.response && error.response.status == 400) {
                 setErrors(error.response.data);
 
-                // Swal.fire(
-                //     'Error de Validacion',
-                //     `Errores:  ${error.response.data.userName} \\n
-                //     ${error.response.data.password} \\n
-                //     ${error.response.data.email} \\n`,
+            }else if(error.response && error.response.status == 500 &&
+                error.response.data?.message?.includes('constraint')){
 
-                //     'error'
-                // );
-
+                    if (error.response.data?.message?.includes('UK_username')) {
+                        setErrors({
+                            userName: 'El Usename Ya existe!'
+                        })
+                    }else if (error.response.data?.message?.includes('UK_email')) {
+                        setErrors({
+                            email: 'El email Ya existe!'
+                        })
+                    }
 
             } else {
                 throw error;
