@@ -39,9 +39,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             userName = user.getUserName();
             password = user.getPassword();
 
-            logger.info("UserName form Request (raw): " + userName);
-            logger.info("Password form Request (raw): " + password);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
