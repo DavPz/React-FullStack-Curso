@@ -1,6 +1,9 @@
 package com.backend.usersapp.backendusersapp.auth.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +16,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.backend.usersapp.backendusersapp.auth.TokenConfig.*;
 
@@ -33,23 +39,29 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
         }
 
         String token = header.replace(PREFIX_TOKEN, "");
-        byte[] tokenDecodeBytes = Base64.getDecoder().decode(token);
-        String tokenDecode = new String(tokenDecodeBytes);
+        try {
 
-        String[] tokenArr = tokenDecode.split(":");
-        String secret = tokenArr[0];
-        String userName = tokenArr[1];
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
 
-        if (SECRET_KEY.equals(secret)) {
+            String userName = claims.getSubject();
+
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userName, null, authorities);
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
 
-        } else {
+        } catch (JwtException e) {
             Map<String, String> body = new HashMap<>();
+            body.put("error", e.getMessage());
             body.put("message", "El token no es valido");
+
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
             response.setStatus(403);
             response.setContentType(CONTENT_TYPE_JSON);
