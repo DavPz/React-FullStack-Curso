@@ -2,6 +2,7 @@ package com.backend.usersapp.backendusersapp.auth.filters;
 
 import com.backend.usersapp.backendusersapp.models.entities.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,9 +12,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,12 +57,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String userName = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getUsername();
 
+        Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
+
+        boolean isAdmin = roles.stream().anyMatch(r-> r.getAuthority().equals("ROLE_ADMIN"));
+
+        Claims claims = Jwts.claims();
+        claims.put("authorities", new ObjectMapper().writeValueAsString(roles));
+        claims.put("isAdmin", isAdmin);
+
         String token = Jwts.builder()
+                .setClaims(claims)
                 .setSubject(userName)
                 .signWith(SECRET_KEY)
                 .setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .compact();
-
 
         response.addHeader(HEADER_AUTHORIZATION, PREFIX_TOKEN + token);
         Map<String, Object> body = new HashMap<>();
