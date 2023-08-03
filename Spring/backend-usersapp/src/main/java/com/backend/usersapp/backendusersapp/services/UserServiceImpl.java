@@ -1,8 +1,11 @@
 package com.backend.usersapp.backendusersapp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.backend.usersapp.backendusersapp.models.entities.Rol;
+import com.backend.usersapp.backendusersapp.repositories.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private RolRepository rolRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -34,7 +40,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
 
     }
-    
+
     @Override
     @Transactional
     public Optional<User> update(User user, Long id) {
@@ -46,7 +52,7 @@ public class UserServiceImpl implements UserService {
             userDb.setEmail(user.getEmail());
             userOptional = this.save(userDb);
         }
-        
+
         return Optional.ofNullable(userOptional);
     }
 
@@ -54,10 +60,19 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Optional<Rol> o = rolRepository.findByName("ROLE_USER");
+        List<Rol> roles = new ArrayList<>();
+
+        if (o.isPresent()) {
+            roles.add(o.orElseThrow());
+        }
+
+        user.setRoles(roles);
         return userRepository.save(user);
 
     }
-    
+
     @Override
     @Transactional
     public void remove(Long id) {

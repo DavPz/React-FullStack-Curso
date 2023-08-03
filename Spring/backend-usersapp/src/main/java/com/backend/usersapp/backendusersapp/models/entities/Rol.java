@@ -6,6 +6,14 @@ import jakarta.persistence.*;
 @Table(name = "roles")
 public class Rol {
 
+    public Rol() {
+    }
+
+    public Rol(Long id,String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
