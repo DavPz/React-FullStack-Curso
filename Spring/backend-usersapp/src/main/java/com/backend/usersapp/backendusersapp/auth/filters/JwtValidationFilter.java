@@ -16,10 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.backend.usersapp.backendusersapp.auth.TokenConfig.*;
 
@@ -48,9 +45,11 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
                     .getBody();
 
             String userName = claims.getSubject();
+            Object authoritiesClaims = claims.get("authorities");
 
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+            Collection<? extends GrantedAuthority> authorities = Arrays
+                    .asList(new ObjectMapper().readValue(authoritiesClaims.toString().getBytes(),SimpleGrantedAuthority[].class));
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userName, null, authorities);
 
