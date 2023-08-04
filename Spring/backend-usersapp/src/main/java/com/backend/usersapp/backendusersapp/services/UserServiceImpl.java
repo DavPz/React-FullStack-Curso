@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         List<Rol> roles = new ArrayList<>();
 
         if (o.isPresent()) {
-            roles.add(o.orElseThrow());
+            roles.add(o.get());
         }
 
         user.setRoles(roles);

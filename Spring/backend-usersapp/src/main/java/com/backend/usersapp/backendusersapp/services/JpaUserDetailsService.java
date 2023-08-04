@@ -30,7 +30,7 @@ public class JpaUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("Username %s no existe en el sistema", username));
         }
 
-        com.backend.usersapp.backendusersapp.models.entities.User user = o.orElseThrow();
+        com.backend.usersapp.backendusersapp.models.entities.User user = o.get();
 
         List<GrantedAuthority> authorities = user.getRoles()
                 .stream()
