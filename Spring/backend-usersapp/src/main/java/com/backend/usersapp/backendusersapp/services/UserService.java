@@ -3,19 +3,20 @@ package com.backend.usersapp.backendusersapp.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.backend.usersapp.backendusersapp.models.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import com.backend.usersapp.backendusersapp.models.entities.User;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserDto> findAll();
 
-    Optional<User> findById(Long id);
+    Optional<UserDto> findById(Long id);
 
-    User save(User user);
+    UserDto save(User user);
     
-    Optional<User> update(User user, Long id);
+    Optional<UserDto> update(User user, Long id);
 
     void remove(Long id);
 
