@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.backend.usersapp.backendusersapp.models.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +34,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> list() {
+    public List<UserDto> list() {
         return userService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
-        Optional<User> userOptional = userService.findById(id);
+        Optional<UserDto> userOptional = userService.findById(id);
 
         if (userOptional.isPresent()) {
             return ResponseEntity.ok(userOptional.orElseThrow());
@@ -61,7 +62,7 @@ public class UserController {
         if (result.hasErrors()) {
             return validation(result);
         }
-        Optional<User> o = userService.update(user, id);
+        Optional<UserDto> o = userService.update(user, id);
         if (o.isPresent()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(o.orElseThrow());
         }
@@ -71,7 +72,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeUser(@PathVariable Long id) {
-        Optional<User> o = userService.findById(id);
+        Optional<UserDto> o = userService.findById(id);
         if (o.isPresent()) {
             userService.remove(id);
             return ResponseEntity.noContent().build();
