@@ -15,10 +15,15 @@ export const useAuth = () => {
     const navigate = useNavigate();
 
 
-    const handlerLogin = ({ userName, password }) => {
-        const isLogin = loginUser({ userName, password });
-        if (isLogin) {
-            const user = { userName: 'admin' };
+    const handlerLogin = async ({ userName, password }) => {
+        
+        try {
+
+            const response = await loginUser({ userName, password });
+
+            const token = response.data.token;
+
+            const user = { userName: response.data.userName };
             dispatch({
                 type: 'login',
                 payload: user,
@@ -31,7 +36,7 @@ export const useAuth = () => {
             navigate("/users");
 
 
-        } else {
+        } catch(error) {
             Swal.fire('Error de Login', 'Username y/o Password incorrectos', 'error');
         }
 
