@@ -1,23 +1,23 @@
-import axios from "axios";
+import userApi from "../apis/userApi";
 
-const BASE_URL = 'http://localhost:8080/users';
+const BASE_URL = '';
 
-const config = () => {
-    return {
-        headers: {
-            "Authorization": sessionStorage.getItem("token"),
-            "Content-Type": "Application/json",
-        }
-    }
-}
+// const config = () => {
+//     return {
+//         headers: {
+//             "Authorization": sessionStorage.getItem("token"),
+//             "Content-Type": "Application/json",
+//         }
+//     }
+// }
 
 export const finAll = async () => {
 
     try {
-        const response = await axios.get(BASE_URL);
+        const response = await userApi.get(BASE_URL);
         return response;
     } catch (error) {
-        console.error(error);
+        throw error;
     }
 
     return null;
@@ -26,13 +26,12 @@ export const finAll = async () => {
 export const save = async ({ userName, email, password, adminRole }) => {
 
     try {
-        return await axios.post(BASE_URL, {
+        return await userApi.post(BASE_URL, {
             userName,
             email,
             password,
             adminRole,
-        },
-            config());
+        });
     } catch (error) {
         throw error;
     }
@@ -40,12 +39,12 @@ export const save = async ({ userName, email, password, adminRole }) => {
 
 export const updateUser = async ({ id, userName, email, adminRole }) => {
     try {
-        return await axios.put(`${BASE_URL}/${id}`, {
+        return await userApi.put(`${BASE_URL}/${id}`, {
             userName,
             email,
             password: 'placeholder',
             adminRole,
-        }, config());
+        });
     } catch (error) {
         throw error;
     }
@@ -54,7 +53,7 @@ export const updateUser = async ({ id, userName, email, adminRole }) => {
 
 export const deleteUser = async (id) => {
     try {
-        await axios.delete(`${BASE_URL}/${id}`, config());
+        await userApi.delete(`${BASE_URL}/${id}`);
     } catch (error) {
         throw error;
     }

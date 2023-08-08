@@ -33,12 +33,23 @@ export const useUsers = () => {
     const { handlerLogout } = useContext(AuthContext);
 
     const getUsers = async () => {
-        const result = await finAll();
-        console.log(result.data);
-        dispatch({            
-            type: 'loadingUsers',
-            payload: result.data,
-        })
+
+        try {
+
+            const result = await finAll();
+            console.log(result.data);
+            dispatch({
+                type: 'loadingUsers',
+                payload: result.data,
+            })
+
+        } catch (error) {
+            
+            if (error.response?.status == 401) {
+                handlerLogout();
+            }
+        }
+
     };
 
     const handleAddUser = async (user) => {
@@ -104,7 +115,7 @@ export const useUsers = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, Eliminar'
-        }).then( async (result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
 
                 try {
