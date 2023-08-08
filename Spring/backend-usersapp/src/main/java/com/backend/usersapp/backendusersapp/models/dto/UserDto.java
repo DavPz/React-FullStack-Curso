@@ -5,11 +5,11 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(Long id, String userName, String email, boolean admin) {
+    public UserDto(Long id, String userName, String email, boolean adminRole) {
         this.id = id;
         this.userName = userName;
         Email = email;
-        this.admin = admin;
+        this.adminRole = adminRole;
     }
 
     private Long id;
@@ -18,7 +18,7 @@ public class UserDto {
 
     private String Email;
 
-    private boolean admin;
+    private boolean adminRole;
 
 
     public Long getId() {
@@ -45,11 +45,11 @@ public class UserDto {
         Email = email;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public boolean isAdminRole() {
+        return adminRole;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setAdminRole(boolean adminRole) {
+        this.adminRole = adminRole;
     }
 }

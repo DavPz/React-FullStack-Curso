@@ -23,13 +23,14 @@ export const finAll = async () => {
     return null;
 }
 
-export const save = async ({ userName, email, password }) => {
+export const save = async ({ userName, email, password, adminRole }) => {
 
     try {
         return await axios.post(BASE_URL, {
             userName,
             email,
             password,
+            adminRole,
         },
             config());
     } catch (error) {
@@ -37,12 +38,13 @@ export const save = async ({ userName, email, password }) => {
     }
 }
 
-export const updateUser = async ({ id, userName, email }) => {
+export const updateUser = async ({ id, userName, email, adminRole }) => {
     try {
         return await axios.put(`${BASE_URL}/${id}`, {
             userName,
             email,
-            password: 'placeholder'
+            password: 'placeholder',
+            adminRole,
         }, config());
     } catch (error) {
         throw error;

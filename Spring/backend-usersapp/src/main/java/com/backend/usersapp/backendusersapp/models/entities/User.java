@@ -3,7 +3,6 @@ package com.backend.usersapp.backendusersapp.models.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public class User {
     private String email;
 
     @Transient
-    private boolean admin;
+    private boolean adminRole;
 
     @ManyToMany
     @JoinTable(name = "users_roles",
@@ -79,11 +78,11 @@ public class User {
         this.roles = roles;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public boolean isAdminRole() {
+        return adminRole;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setAdminRole(boolean adminRole) {
+        this.adminRole = adminRole;
     }
 }

@@ -12,6 +12,7 @@ const inicitalUserForm = {
     userName: '',
     password: '',
     email: '',
+    adminRole: false,
 };
 
 const inicitalErrors = {
@@ -33,7 +34,8 @@ export const useUsers = () => {
 
     const getUsers = async () => {
         const result = await finAll();
-        dispatch({
+        console.log(result.data);
+        dispatch({            
             type: 'loadingUsers',
             payload: result.data,
         })

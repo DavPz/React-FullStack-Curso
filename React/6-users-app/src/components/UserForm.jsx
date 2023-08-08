@@ -8,7 +8,9 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
 
     const [userForm, setUserForm] = useState(inicitalUserForm);
 
-    const { id, userName, password, email } = userForm;
+    const [checked, setChecked] = useState(userForm.adminRole);
+
+    const { id, userName, password, email, adminRole } = userForm;
 
     useEffect(() => {
         setUserForm({
@@ -25,6 +27,16 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
             [name]: value,
         })
     }
+
+    const onCheckboxChange = () => {
+        setChecked(!checked);
+        setUserForm(
+            {
+                ...userForm,
+                adminRole: checked,
+            }
+        )
+    };
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -50,7 +62,7 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
         // }
 
         handleAddUser(userForm);
-        
+
     }
 
     const onCloseForm = () => {
@@ -91,6 +103,17 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
                 name="id"
                 value={id}
             />
+
+            <div className="my-3 form-check">
+                <input type="checkbox"
+                    name="adminRole"
+                    checked={adminRole}
+                    className="form-check-input"
+                    onChange={onCheckboxChange}
+                />
+                <label className="form-check-label">Admin Role</label>
+            </div>
+
             <button
                 className="btn btn-primary"
                 type="submit"

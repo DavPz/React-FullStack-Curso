@@ -10,8 +10,6 @@ import com.backend.usersapp.backendusersapp.models.dto.mapper.DtoMapperUser;
 import com.backend.usersapp.backendusersapp.models.entities.Rol;
 import com.backend.usersapp.backendusersapp.repositories.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,6 +63,7 @@ public class UserServiceImpl implements UserService {
             User userDb = o.get();
             userDb.setUserName(user.getUserName());
             userDb.setEmail(user.getEmail());
+            userDb.setAdminRole(user.isAdminRole());
             userDb.setRoles(getRoles(userDb));
             userOptional = userRepository.save(userDb);
         }
@@ -97,7 +96,7 @@ public class UserServiceImpl implements UserService {
             roles.add(ou.orElseThrow());
         }
 
-        if(user.isAdmin()){
+        if(user.isAdminRole()){
             Optional<Rol> oa = rolRepository.findByName("ROLE_ADMIN");
             if (oa.isPresent()){
                 roles.add(oa.orElseThrow());
