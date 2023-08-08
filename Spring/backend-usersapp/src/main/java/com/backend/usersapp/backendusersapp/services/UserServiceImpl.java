@@ -61,9 +61,11 @@ public class UserServiceImpl implements UserService {
         Optional<User> o = userRepository.findById(id);
         User userOptional = null;
         if (o.isPresent()) {
+
             User userDb = o.get();
             userDb.setUserName(user.getUserName());
             userDb.setEmail(user.getEmail());
+            userDb.setRoles(getRoles(userDb));
             userOptional = userRepository.save(userDb);
         }
 
@@ -75,14 +77,7 @@ public class UserServiceImpl implements UserService {
     public UserDto save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Optional<Rol> o = rolRepository.findByName("ROLE_USER");
-        List<Rol> roles = new ArrayList<>();
-
-        if (o.isPresent()) {
-            roles.add(o.get());
-        }
-
-        user.setRoles(roles);
+        user.setRoles(getRoles(user));
         return DtoMapperUser.builder().setUser(userRepository.save(user)).build();
 
     }
@@ -93,4 +88,21 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+
+    private List<Rol> getRoles(User user){
+        Optional<Rol> ou = rolRepository.findByName("ROLE_USER");
+        List<Rol> roles = new ArrayList<>();
+
+        if (ou.isPresent()) {
+            roles.add(ou.orElseThrow());
+        }
+
+        if(user.isAdmin()){
+            Optional<Rol> oa = rolRepository.findByName("ROLE_ADMIN");
+            if (oa.isPresent()){
+                roles.add(oa.orElseThrow());
+            }
+        }
+        return roles;
+    }
 }

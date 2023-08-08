@@ -29,6 +29,9 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @Transient
+    private boolean admin;
+
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -74,5 +77,13 @@ public class User {
 
     public void setRoles(List<Rol> roles) {
         this.roles = roles;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
