@@ -2,10 +2,12 @@ import axios from "axios";
 
 const BASE_URL = 'http://localhost:8080/users';
 
-const config = {
-    headers: {
-        "Authorization": sessionStorage.getItem("token"),
-        "Content-Type": "Application/json",
+const config = () => {
+    return {
+        headers: {
+            "Authorization": sessionStorage.getItem("token"),
+            "Content-Type": "Application/json",
+        }
     }
 }
 
@@ -29,7 +31,7 @@ export const save = async ({ userName, email, password }) => {
             email,
             password,
         },
-            config);
+            config());
     } catch (error) {
         throw error;
     }
@@ -41,7 +43,7 @@ export const updateUser = async ({ id, userName, email }) => {
             userName,
             email,
             password: 'placeholder'
-        }, config);
+        }, config());
     } catch (error) {
         throw error;
     }
@@ -50,7 +52,7 @@ export const updateUser = async ({ id, userName, email }) => {
 
 export const deleteUser = async (id) => {
     try {
-        await axios.delete(`${BASE_URL}/${id}`, config);
+        await axios.delete(`${BASE_URL}/${id}`, config());
     } catch (error) {
         console.error(error);
     }
