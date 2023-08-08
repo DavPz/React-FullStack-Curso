@@ -25,7 +25,7 @@ export const useAuth = () => {
             const token = response.data.token;
             const claims = JSON.parse(window.atob(token.split(".")[1]));
 
-            console.log(claims);
+            console.log(token);
 
             const user = { userName: response.data.userName };
             dispatch({
