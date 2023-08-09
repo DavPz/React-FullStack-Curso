@@ -4,6 +4,8 @@ import { usersReducer } from "../reducers/usersReducer";
 import { useNavigate } from "react-router-dom";
 import { deleteUser, finAll, save, updateUser } from "../services/userService";
 import { AuthContext } from "../auth/context/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser, updateUserRedux, loadingUsers, } from "../store/slices/users/usersSlice";
 
 const inictialUsers = [];
 
@@ -23,7 +25,9 @@ const inicitalErrors = {
 
 export const useUsers = () => {
 
-    const [users, dispatch] = useReducer(usersReducer, inictialUsers);
+    // const [users, dispatch] = useReducer(usersReducer, inictialUsers);
+    const { users } = useSelector(state => state.users);
+    const dispatch = useDispatch();
     const [userSelected, setUserSelected] = useState(inicitalUserForm);
     const [visibleForm, setVisibleForm] = useState(false);
 
@@ -37,14 +41,9 @@ export const useUsers = () => {
         try {
 
             const result = await finAll();
-            console.log(result.data);
-            dispatch({
-                type: 'loadingUsers',
-                payload: result.data,
-            })
-
+            dispatch(loadingUsers(result.data));
         } catch (error) {
-            
+
             if (error.response?.status == 401) {
                 handlerLogout();
             }
@@ -60,14 +59,11 @@ export const useUsers = () => {
 
             if (user.id === 0) {
                 response = await save(user);
+                dispatch(addUser(response.data))
             } else {
                 response = await updateUser(user);
+                dispatch(updateUser(response.data));
             }
-
-            dispatch({
-                type: (user.id === 0) ? 'addUser' : 'updateUser',
-                payload: response.data,
-            });
 
             Swal.fire(
                 (user.id === 0) ? 'Usuario Creado' : 'Usuario Actualizado',
@@ -122,10 +118,7 @@ export const useUsers = () => {
 
                     await deleteUser(id);
 
-                    dispatch({
-                        type: 'removeUser',
-                        payload: id,
-                    });
+                    dispatch(removeUser(id));
 
                     Swal.fire(
                         'Uusario Eliminado!',

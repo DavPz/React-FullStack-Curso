@@ -21,7 +21,7 @@ export const usersSlice = createSlice({
             state.users = state.filter(i => i.id !== action.payload);
         },
 
-        updateUser: (state, action) => {
+        updateUserRedux: (state, action) => {
             state.users = state.users.map(u => {
 
                 if (u.id === action.payload.id) {
@@ -44,6 +44,6 @@ export const usersSlice = createSlice({
 export const {
     addUser,
     removeUser,
-    updateUser,
+    updateUserRedux,
     loadingUsers,
 } = usersSlice.actions;
