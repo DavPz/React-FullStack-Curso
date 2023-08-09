@@ -5,33 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { deleteUser, finAll, save, updateUser } from "../services/userService";
 import { AuthContext } from "../auth/context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, removeUser, updateUserRedux, loadingUsers, } from "../store/slices/users/usersSlice";
-
-const inictialUsers = [];
-
-const inicitalUserForm = {
-    id: 0,
-    userName: '',
-    password: '',
-    email: '',
-    adminRole: false,
-};
-
-const inicitalErrors = {
-    userName: '',
-    password: '',
-    email: '',
-};
+import { inicitalUserForm, addUser, removeUser, updateUserRedux, loadingUsers, onUserSelectedForm, onOpenForm, onCloseForm, } from "../store/slices/users/usersSlice";
 
 export const useUsers = () => {
 
-    // const [users, dispatch] = useReducer(usersReducer, inictialUsers);
-    const { users } = useSelector(state => state.users);
+    const { users, userSelected, visibleForm, errors } = useSelector(state => state.users);
     const dispatch = useDispatch();
-    const [userSelected, setUserSelected] = useState(inicitalUserForm);
-    const [visibleForm, setVisibleForm] = useState(false);
 
-    const [errors, setErrors] = useState(inicitalErrors);
     const navigate = useNavigate();
 
     const { handlerLogout } = useContext(AuthContext);
@@ -62,7 +42,7 @@ export const useUsers = () => {
                 dispatch(addUser(response.data))
             } else {
                 response = await updateUser(user);
-                dispatch(updateUser(response.data));
+                dispatch(updateUserRedux(response.data));
             }
 
             Swal.fire(
@@ -139,18 +119,15 @@ export const useUsers = () => {
     }
 
     const handlerUserSelectedForm = (user) => {
-        // console.log(user);
-        setVisibleForm(true);
-        setUserSelected({ ...user });
+        dispatch(onUserSelectedForm({ ...user }))
     }
 
     const handlerOpenForm = () => {
-        setVisibleForm(true);
+        dispatch(onOpenForm());
     }
 
     const handlerCloseForm = () => {
-        setVisibleForm(false);
-        setUserSelected(inicitalUserForm);
+        dispatch(onCloseForm());
         setErrors({});
     }
 

@@ -1,10 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const inicitalUserForm = {
+    id: 0,
+    userName: '',
+    password: '',
+    email: '',
+    adminRole: false,
+};
+
+const inicitalErrors = {
+    userName: '',
+    password: '',
+    email: '',
+};
+
+
 export const usersSlice = createSlice({
 
     name: 'users',
     initialState: {
         users: [],
+        userSelected: inicitalUserForm,
+        visibleForm: false,
+        errors: inicitalErrors,
     },
     reducers: {
 
@@ -14,7 +32,9 @@ export const usersSlice = createSlice({
                 {
                     ...action.payload
                 }
-            ]
+            ];
+            state.userSelected = inicitalUserForm;
+            state.visibleForm = false;
         },
 
         removeUser: (state, action) => {
@@ -31,12 +51,28 @@ export const usersSlice = createSlice({
                     };
                 }
                 return u;
-            })
+            });
+            state.userSelected = inicitalUserForm;
+            state.visibleForm = false;
         },
 
         loadingUsers: (state, action) => {
             state.users = action.payload;
-        }
+        },
+
+        onUserSelectedForm: (state, action) => {
+            state.userSelected = action.payload;
+            state.visibleForm = true;
+        },
+
+        onOpenForm: (state) => {
+            state.visibleForm = true;
+        },
+
+        onCloseForm: (state) => {
+            state.visibleForm = false;
+            state.userSelected = inicitalUserForm;
+        },
     }
 
 });
@@ -46,4 +82,7 @@ export const {
     removeUser,
     updateUserRedux,
     loadingUsers,
+    onUserSelectedForm,
+    onOpenForm,
+    onCloseForm,
 } = usersSlice.actions;
