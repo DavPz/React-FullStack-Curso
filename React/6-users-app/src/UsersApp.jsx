@@ -10,7 +10,6 @@ export const UsersApp = () => {
 
         <Provider store={store}>
             <AppRoutes />
-
         </Provider>
 
     )
