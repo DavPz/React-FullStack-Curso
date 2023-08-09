@@ -1,11 +1,10 @@
-import { useContext, useReducer, useState } from "react";
-import Swal from "sweetalert2";
-import { usersReducer } from "../reducers/usersReducer";
-import { useNavigate } from "react-router-dom";
-import { deleteUser, finAll, save, updateUser } from "../services/userService";
-import { AuthContext } from "../auth/context/AuthContext";
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { inicitalUserForm, addUser, removeUser, updateUserRedux, loadingUsers, onUserSelectedForm, onOpenForm, onCloseForm, } from "../store/slices/users/usersSlice";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../auth/context/AuthContext";
+import { deleteUser, finAll, save, updateUser } from "../services/userService";
+import { addUser, inicitalUserForm, loadingUsers, onCloseForm, onOpenForm, onUserSelectedForm, removeUser, updateUserRedux, loadingError } from "../store/slices/users/usersSlice";
 
 export const useUsers = () => {
 
@@ -56,19 +55,19 @@ export const useUsers = () => {
 
         } catch (error) {
             if (error.response && error.response.status == 400) {
-                setErrors(error.response.data);
+                dispatch(loadingError(error.response.data));
 
             } else if (error.response && error.response.status == 500 &&
                 error.response.data?.message?.includes('constraint')) {
 
                 if (error.response.data?.message?.includes('UK_username')) {
-                    setErrors({
+                    dispatch(loadingError({
                         userName: 'El Usename Ya existe!'
-                    })
+                    }));
                 } else if (error.response.data?.message?.includes('UK_email')) {
-                    setErrors({
+                    dispatch(loadingError({
                         email: 'El email Ya existe!'
-                    })
+                    }));
                 }
 
             } else if (error.response?.status == 401) {
@@ -128,7 +127,7 @@ export const useUsers = () => {
 
     const handlerCloseForm = () => {
         dispatch(onCloseForm());
-        setErrors({});
+        dispatch(loadingError({}));
     }
 
     return {

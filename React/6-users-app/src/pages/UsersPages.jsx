@@ -3,6 +3,7 @@ import { UserList } from "../components/UserList"
 import { UserModalForm } from "../components/UserModalForm";
 import { UserContext } from "../context/UserContext";
 import { AuthContext } from "../auth/context/AuthContext";
+import { useUsers } from "../hooks/useUsers";
 
 export const UsersPages = () => {
 
@@ -11,7 +12,7 @@ export const UsersPages = () => {
         visibleForm,
         handlerOpenForm,
         getUsers,
-    } = useContext(UserContext);
+    } = useUsers();
 
     const { login } = useContext(AuthContext);
 
