@@ -1,11 +1,11 @@
-import { useContext } from "react"
-import { UserRow } from "./UserRow"
-import { UserContext } from "../context/UserContext"
+import { useContext } from "react";
 import { AuthContext } from "../auth/context/AuthContext";
+import { useUsers } from "../hooks/useUsers";
+import { UserRow } from "./UserRow";
 
 export const UserList = () => {
 
-    const { users } = useContext(UserContext);
+    const { users } = useUsers();
 
     const { login } = useContext(AuthContext);
 

@@ -1,11 +1,11 @@
-import { useContext } from "react"
-import { NavLink } from "react-router-dom"
-import { UserContext } from "../context/UserContext"
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { AuthContext } from "../auth/context/AuthContext";
+import { useUsers } from "../hooks/useUsers";
 
 export const UserRow = ({ id, userName, email, adminRole }) => {
 
-    const { handleRemoveUser, handlerUserSelectedForm } = useContext(UserContext);
+    const { handleRemoveUser, handlerUserSelectedForm } = useUsers();
 
     const { login } = useContext(AuthContext);
 
