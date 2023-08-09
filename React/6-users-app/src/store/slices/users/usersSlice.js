@@ -38,7 +38,7 @@ export const usersSlice = createSlice({
         },
 
         removeUser: (state, action) => {
-            state.users = state.filter(i => i.id !== action.payload);
+            state.users = state.users.filter(user => user.id !== action.payload);
         },
 
         updateUserRedux: (state, action) => {
