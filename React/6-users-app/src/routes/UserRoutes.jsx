@@ -1,15 +1,13 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { UsersPages } from "../pages/UsersPages";
+import { useAuth } from "../auth/hooks/useAuth";
 import { Navbar } from "../components/layout/Navbar";
 import { RegisterPage } from "../pages/RegisterPage";
-import { UserProvider } from "../context/UserProvider";
-import { AuthContext } from "../auth/context/AuthContext";
-import { useContext } from "react";
+import { UsersPages } from "../pages/UsersPages";
 
 export const UserRoutes = () => {
 
 
-    const { login } = useContext(AuthContext);
+    const { login } = useAuth();
 
     return (
         <>

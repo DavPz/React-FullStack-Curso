@@ -1,8 +1,7 @@
-import { useContext, useEffect } from "react";
-import { UserList } from "../components/UserList"
+import { useEffect } from "react";
+import { useAuth } from "../auth/hooks/useAuth";
+import { UserList } from "../components/UserList";
 import { UserModalForm } from "../components/UserModalForm";
-import { UserContext } from "../context/UserContext";
-import { AuthContext } from "../auth/context/AuthContext";
 import { useUsers } from "../hooks/useUsers";
 
 export const UsersPages = () => {
@@ -14,7 +13,7 @@ export const UsersPages = () => {
         getUsers,
     } = useUsers();
 
-    const { login } = useContext(AuthContext);
+    const { login } = useAuth();
 
     useEffect(() => {
         getUsers();
