@@ -23,6 +23,7 @@ export const usersSlice = createSlice({
         userSelected: inicitalUserForm,
         visibleForm: false,
         errors: inicitalErrors,
+        isLoading: true,
     },
     reducers: {
 
@@ -58,6 +59,7 @@ export const usersSlice = createSlice({
 
         loadingUsers: (state, {payload}) => {
             state.users = payload;
+            state.isLoading = false;
         },
 
         onUserSelectedForm: (state, {payload}) => {

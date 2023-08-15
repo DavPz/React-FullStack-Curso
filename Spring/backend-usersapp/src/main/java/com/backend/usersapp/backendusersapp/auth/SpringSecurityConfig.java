@@ -60,6 +60,7 @@ public class SpringSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cofig = new CorsConfiguration();
         cofig.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        cofig.setAllowedOriginPatterns(Arrays.asList("*"));
         cofig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         cofig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         cofig.setAllowCredentials(true);

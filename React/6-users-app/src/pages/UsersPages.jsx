@@ -9,6 +9,7 @@ export const UsersPages = () => {
     const {
         users,
         visibleForm,
+        isLoading,
         handlerOpenForm,
         getUsers,
     } = useUsers();
@@ -18,6 +19,18 @@ export const UsersPages = () => {
     useEffect(() => {
         getUsers();
     }, [])
+
+    if (isLoading) {
+        return
+        <div className="container my-4">
+            <div className="d-flex justify-content-center">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+    };
 
     return (
         <>
@@ -35,9 +48,10 @@ export const UsersPages = () => {
                                 Nuevo Usuario
                             </button>
                         }
-                        {users.length === 0
-                            ? <div className="alert alert-warning">No Hay usuarios en el Sitema</div>
-                            : <UserList />
+                        {
+                            users.length === 0
+                                ? <div className="alert alert-warning">No Hay usuarios en el Sitema</div>
+                                : <UserList />
                         }
 
                     </div>

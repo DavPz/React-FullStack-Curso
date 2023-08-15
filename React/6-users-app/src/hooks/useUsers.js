@@ -7,7 +7,7 @@ import { addUser, inicitalUserForm, loadingError, loadingUsers, onCloseForm, onO
 
 export const useUsers = () => {
 
-    const { users, userSelected, visibleForm, errors } = useSelector(state => state.users);
+    const { users, userSelected, visibleForm, errors, isLoading } = useSelector(state => state.users);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -135,6 +135,7 @@ export const useUsers = () => {
         inicitalUserForm,
         visibleForm,
         errors,
+        isLoading,
         handleAddUser,
         handleRemoveUser,
         handlerUserSelectedForm,
