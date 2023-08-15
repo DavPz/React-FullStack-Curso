@@ -21,14 +21,15 @@ export const UsersPages = () => {
     }, [])
 
     if (isLoading) {
-        return
-        <div className="container my-4">
-            <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+        return (
+            <div className="container my-4">
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        )
 
     };
 
