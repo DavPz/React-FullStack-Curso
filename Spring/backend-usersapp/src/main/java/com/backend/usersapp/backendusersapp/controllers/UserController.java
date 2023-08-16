@@ -7,6 +7,9 @@ import java.util.Optional;
 
 import com.backend.usersapp.backendusersapp.models.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -38,6 +41,11 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/page/{page}")
+    public Page<UserDto> list(@PathVariable Integer page) {
+        Pageable pageable = PageRequest.of(page, 6);
+        return userService.findAll(pageable);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
         Optional<UserDto> userOptional = userService.findById(id);

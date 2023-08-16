@@ -10,6 +10,8 @@ import com.backend.usersapp.backendusersapp.models.dto.mapper.DtoMapperUser;
 import com.backend.usersapp.backendusersapp.models.entities.Rol;
 import com.backend.usersapp.backendusersapp.repositories.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +43,14 @@ public class UserServiceImpl implements UserService {
                         .setUser(u)
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<UserDto> findAll(Pageable pageable) {
+        return userRepository
+                .findAll(pageable)
+                .map(u-> DtoMapperUser.builder().setUser(u).build());
     }
 
     @Override
