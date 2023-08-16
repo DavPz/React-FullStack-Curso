@@ -1,20 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { onLogin, onLogout } from "../../store/slices/auth/authSlice";
+import { onLogin, onLogout,onInitLogin } from "../../store/slices/auth/authSlice";
 import { loginUser } from "../services/authService";
 
 
 export const useAuth = () => {
 
     const dispatch = useDispatch();
-    const {user, isAdmin, isAuth} = useSelector(state => state.auth);
+    const {user, isAdmin, isAuth, isLoaginLoading } = useSelector(state => state.auth);
 
     const navigate = useNavigate();
 
     const handlerLogin = async ({ userName, password }) => {
 
         try {
+
+            dispatch(onInitLogin());
 
             const response = await loginUser({ userName, password });
 
@@ -23,6 +25,7 @@ export const useAuth = () => {
 
             const user = { userName: response.data.userName };
             dispatch(onLogin({ user, isAdmin: claims.isAdmin }));
+            
 
             sessionStorage.setItem('login', JSON.stringify({
                 isAuth: true,
@@ -36,6 +39,7 @@ export const useAuth = () => {
 
 
         } catch (error) {
+            dispatch(onLogout());
             if (error.response?.status == 401) {
                 Swal.fire('Error de Login', 'Username y/o Password incorrectos', 'error');
             } else if (error.response?.status == 403) {
@@ -63,6 +67,7 @@ export const useAuth = () => {
             user,
             isAdmin,
             isAuth,
+            isLoaginLoading,
         },
         handlerLogin,
         handlerLogout,

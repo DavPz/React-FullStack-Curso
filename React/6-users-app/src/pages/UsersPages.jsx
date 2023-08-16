@@ -3,6 +3,7 @@ import { useAuth } from "../auth/hooks/useAuth";
 import { UserList } from "../components/UserList";
 import { UserModalForm } from "../components/UserModalForm";
 import { useUsers } from "../hooks/useUsers";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 
 export const UsersPages = () => {
 
@@ -22,15 +23,8 @@ export const UsersPages = () => {
 
     if (isLoading) {
         return (
-            <div className="container my-4">
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
+            <LoadingSpinner />
         )
-
     };
 
     return (
