@@ -23,6 +23,18 @@ export const finAll = async () => {
     return null;
 }
 
+export const finAllPages = async (page = 0) => {
+
+    try {
+        const response = await userApi.get(`${BASE_URL}/page/${page}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+
+    return null;
+}
+
 export const save = async ({ userName, email, password, adminRole }) => {
 
     try {

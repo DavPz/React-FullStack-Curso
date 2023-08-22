@@ -4,13 +4,18 @@ import { UserList } from "../components/UserList";
 import { UserModalForm } from "../components/UserModalForm";
 import { useUsers } from "../hooks/useUsers";
 import { LoadingSpinner } from "../components/LoadingSpinner";
+import { useParams } from "react-router-dom";
+import { Paginator } from "../components/Paginator";
 
 export const UsersPages = () => {
+
+    const { page } = useParams();
 
     const {
         users,
         visibleForm,
         isLoading,
+        paginator,
         handlerOpenForm,
         getUsers,
     } = useUsers();
@@ -18,8 +23,9 @@ export const UsersPages = () => {
     const { login } = useAuth();
 
     useEffect(() => {
-        getUsers();
-    }, [])
+        debugger;
+        getUsers(page);
+    }, [, page])
 
     if (isLoading) {
         return (
@@ -46,7 +52,12 @@ export const UsersPages = () => {
                         {
                             users.length === 0
                                 ? <div className="alert alert-warning">No Hay usuarios en el Sitema</div>
-                                : <UserList />
+                                :
+                                <>
+                                    <UserList />
+                                    <Paginator url={"/users/page"} 
+                                    paginator={paginator}/>
+                                </>
                         }
 
                     </div>
